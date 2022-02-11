@@ -3,7 +3,7 @@ import type { Metadata, Note, Score, ScoreData } from 'sus-types'
 type Line = [header: string, data: string]
 
 function removeQuotations(str: string): string {
-  return str.replace(/^"(.+(?="$))"$/, '$1')
+  return str.replace(/^"(.*(?="$))"$/, '$1')
 }
 
 function splitSUS(sus: string): {
@@ -260,7 +260,7 @@ function toRawObjects([header, data]: Line, toTick: ToTick): [tick: number, valu
 
 /**
  * Parse SUS data into a Score object
- * 
+ *
  * @param sus The content of sus file as a string.
  * @returns A Score object.
  */
