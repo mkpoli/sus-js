@@ -113,6 +113,11 @@ function parseScoreData(lines: Line[], ticksPerBeat: number): ScoreData {
       ]
     ))
 
+  if (barLengths.length === 0) {
+    console.warn('No barLengths found, adding default 4/4 time signature (#00002:4)...')
+    barLengths.push([0, 4])
+  }
+
   let ticks = 0
   const bars = [...barLengths]
     .sort(([measureA], [measureB]) => measureA - measureB)
