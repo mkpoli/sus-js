@@ -12,7 +12,7 @@
     "build:io": "lerna exec --scope=sus-io -- rollup -c ../../rollup.config.js",
     "clear": "lerna exec -- rimraf dist",
     "test": "lerna exec --ignore=sus-types -- jest",
-    "publish": "build && lerna publish"
+    "publish": "lerna version && pnpm run build && lerna publish from-git"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.3",
