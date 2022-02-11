@@ -1,11 +1,38 @@
 # sus-stringify
 
-This library was generated with [Nx](https://nx.dev).
+Convert tick-based score data to sus string.
 
-## Building
+## Usage
 
-Run `nx build sus-stringify` to build the library.
+```javascript
+import { stringify } from 'sus-stringify'
 
-## Running unit tests
+const sus = stringify({
+    metadata: {
+        title: "タイトル",
+        artist: "藝術家",
+        designer: "mkpoli",
+        requests: ["ticks_per_beat 480"]
+    },
+    taps: [
+        { tick: 480, lane: 4, width: 3, type: 1 },
+        { tick: 960, lane: 4, width: 3, type: 1 }
+    ],
+    directionals: [
+        { tick: 1920, lane: 4, width: 3, type: 3 }
+    ],
+    slides: [
+        [
+            { tick: 0, lane: 11, width: 3, type: 1 },
+            { tick: 960, lane: 10, width: 3, type: 3 },
+            { tick: 1920, lane: 9, width: 3, type: 2 }
+        ]
+    ],
+    bpms: [[0, 120.0]],
+    barLengths: [[0, 4.0]]
+})
+console.log(sus)
+```
 
-Run `nx test sus-stringify` to execute the unit tests via [Jest](https://jestjs.io).
+## Links
+* [``sus-parse``](https://github.com/mkpoli/sus-js/blob/main/sus-parse)

@@ -1,11 +1,15 @@
 # sus-parser
 
-This library was generated with [Nx](https://nx.dev).
+Convert sus string to tick-based score data.
 
-## Building
+## Usage
 
-Run `nx build sus-parser` to build the library.
+```javascript
+import { parse } from 'sus-parse'
 
-## Running unit tests
+const score = parse("#00002: 4\n#BPM01: 120\n#00008: 01")
+console.log(score)
+```
 
-Run `nx test sus-parser` to execute the unit tests via [Jest](https://jestjs.io).
+## Links
+* [``sus-stringify``](https://github.com/mkpoli/sus-js/blob/main/sus-stringify)
