@@ -33,7 +33,7 @@ export default [
       versionInjector(),
       ts(),
       resolve(),
-      // terser()
+      terser()
     ],
   },
 ]
