@@ -1,6 +1,6 @@
 {
   "name": "sus-io",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A SUS (Sliding Universal Score) converter (parser and stringifier).",
   "author": "mkpoli <mkpoli@mkpo.li>",
   "license": "MIT",
