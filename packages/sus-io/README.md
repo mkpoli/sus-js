@@ -1,4 +1,4 @@
-# sus-parser
+# sus-io
 
 Convert between SUS (Sliding Universal Score) string to tick-based score data.
 
