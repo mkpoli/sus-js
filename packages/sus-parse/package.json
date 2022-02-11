@@ -1,6 +1,6 @@
 {
   "name": "sus-parse",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A SUS (Sliding Universal Score) parser.",
   "author": "mkpoli <mkpoli@mkpo.li>",
   "license": "MIT",
