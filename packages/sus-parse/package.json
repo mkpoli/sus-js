@@ -1,0 +1,27 @@
+{
+  "name": "sus-parse",
+  "version": "0.0.1",
+  "description": "A SUS (Sliding Universal Score) parser.",
+  "author": "mkpoli <mkpoli@mkpo.li>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkpoli/sus-js.git"
+  },
+  "homepage": "https://github.com/mkpoli/sus-js#readme",
+  "bugs": {
+    "url": "https://github.com/mkpoli/sus-js/issues"
+  },
+  "keywords": [
+    "parser",
+    "converter",
+    "sus",
+    "pjsekai",
+    "chunithm",
+    "seaurchin"
+  ],
+  "source": "src/index.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js"
+}
