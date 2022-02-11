@@ -15,18 +15,21 @@ export default [
       {
         file: `dist/index.cjs.js`,
         format: 'cjs',
-        sourcemap: true
+        sourcemap: true,
+        exports: 'named',
       },
       {
         file: `dist/index.esm.js`,
         format: 'esm',
-        sourcemap: true
+        sourcemap: true,
+        exports: 'named',
       },
       {
         name: LERNA_PACKAGE_NAME,
         file: `dist/index.umd.js`,
         sourcemap: true,
         format: 'umd',
+        exports: 'named',
       },
     ],
     plugins: [
