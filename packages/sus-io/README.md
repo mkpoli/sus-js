@@ -1,11 +1,14 @@
-# sus-stringify
+# sus-parser
 
-Convert tick-based score data to sus string.
+Convert between SUS (Sliding Universal Score) string to tick-based score data.
 
 ## Usage
 
 ```javascript
-import { stringify } from 'sus-stringify'
+import { parse, stringify } from 'sus-io'
+
+const score = parse("#00002: 4\n#BPM01: 120\n#00008: 01")
+console.log(score)
 
 const sus = stringify({
     metadata: {
@@ -35,6 +38,6 @@ console.log(sus)
 ```
 
 ## Links
-- [``sus-io``](https://github.com/mkpoli/sus-js/blob/main/sus-parse)
 - [``sus-parse``](https://github.com/mkpoli/sus-js/blob/main/sus-parse)
+- [``sus-stringify``](https://github.com/mkpoli/sus-js/blob/main/sus-stringify)
 - [``sus-io (Python)``](https://pypi.org/project/sus-io/)

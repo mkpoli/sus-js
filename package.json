@@ -8,6 +8,8 @@
     "build:parse": "lerna exec --scope=sus-parse -- rollup -c ../../rollup.config.js",
     "prebuild:stringify": "lerna exec --scope=sus-stringify -- rimraf dist",
     "build:stringify": "lerna exec --scope=sus-stringify -- rollup -c ../../rollup.config.js",
+    "prebuild:io": "lerna exec --scope=sus-io -- rimraf dist",
+    "build:io": "lerna exec --scope=sus-io -- rollup -c ../../rollup.config.js",
     "clear": "lerna exec -- rimraf dist",
     "test": "lerna exec --ignore=sus-types -- jest"
   },

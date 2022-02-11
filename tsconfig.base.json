@@ -17,7 +17,7 @@
     "baseUrl": ".",
     "outDir": "./",
     "paths": {
-      "sus-parser": ["packages/sus-parser/src/index.ts"],
+      "sus-parse": ["packages/sus-parse/src/index.ts"],
       "sus-stringify": ["packages/sus-stringify/src/index.ts"],
       "sus-types": ["packages/sus-types/src/index.ts"]
     }
