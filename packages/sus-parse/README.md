@@ -12,6 +12,6 @@ console.log(score)
 ```
 
 ## Links
-- [``sus-io``](https://github.com/mkpoli/sus-js/blob/main/sus-parse)
-- [``sus-stringify``](https://github.com/mkpoli/sus-js/blob/main/sus-stringify)
+- [``sus-io``](https://www.npmjs.com/package/sus-io)
+- [``sus-stringify``](https://www.npmjs.com/package/sus-stringify)
 - [``sus-io (Python)``](https://pypi.org/project/sus-io/)

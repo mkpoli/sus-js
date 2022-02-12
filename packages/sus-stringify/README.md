@@ -35,6 +35,6 @@ console.log(sus)
 ```
 
 ## Links
-- [``sus-io``](https://github.com/mkpoli/sus-js/blob/main/sus-parse)
-- [``sus-parse``](https://github.com/mkpoli/sus-js/blob/main/sus-parse)
+- [``sus-io``](https://www.npmjs.com/package/sus-io)
+- [``sus-parse``](https://www.npmjs.com/package/sus-parse)
 - [``sus-io (Python)``](https://pypi.org/project/sus-io/)
