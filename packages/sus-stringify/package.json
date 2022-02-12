@@ -1,6 +1,6 @@
 {
   "name": "sus-stringify",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A SUS (Sliding Universal Score) stringifier.",
   "author": "mkpoli <mkpoli@mkpo.li>",
   "license": "MIT",
