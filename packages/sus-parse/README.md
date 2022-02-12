@@ -1,4 +1,4 @@
-# sus-parser
+# sus-parse
 
 Convert sus string to tick-based score data.
 

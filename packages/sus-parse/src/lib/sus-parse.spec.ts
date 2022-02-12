@@ -1,4 +1,4 @@
-import { _private, parse } from './sus-parser';
+import { _private, parse } from './sus-parse';
 
 describe('splitSUS', () => {
   it('should split SUS into score and metadata and remove other', () => {
