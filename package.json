@@ -16,7 +16,7 @@
     "test:stringify": "lerna exec --scope=sus-stringify -- jest",
     "version": "lerna version --force-publish *",
     "publish:lerna": "lerna publish from-git",
-    "publish": "run-s test build version publish:lerna"
+    "publish": "run-s test version build publish:lerna"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.3",
