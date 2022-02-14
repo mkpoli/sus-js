@@ -17,7 +17,8 @@ pnpm run test
 ```shell
 pnpm run build
 ```
+
 ### Publish
 ```shell
-pnpm run publish
+pnpm run release
 ```
