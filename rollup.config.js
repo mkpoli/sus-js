@@ -1,5 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve'
-import { terser } from 'rollup-plugin-terser'
+import terser from '@rollup/plugin-terser'
 import versionInjector from 'rollup-plugin-version-injector'
 
 import ts from 'rollup-plugin-ts'
