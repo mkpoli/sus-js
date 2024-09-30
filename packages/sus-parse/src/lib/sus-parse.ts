@@ -12,28 +12,25 @@ function splitSUS(sus: string): {
 } {
 	const score: Line[] = [];
 	const metadata: Line[] = [];
-	sus
-		.split(/\r\n|(?!\r\n)[\n-\r\x85\u2028\u2029]/)
-		.filter((line) => line.startsWith('#'))
-		.forEach((line) => {
-			const scoreMatch = line.match(/^#([^:]+): *(.*)$/);
-			if (scoreMatch) {
-				const [header, data] = scoreMatch.slice(1);
-				score.push([header, removeQuotations(data)]);
-				return;
-			}
+	for (const line of sus.split(/\r\n|(?!\r\n)[\n-\r\x85\u2028\u2029]/)) {
+		if (!line.startsWith('#')) continue;
 
-			const metadataMatch = line.match(/^#(.+?) (.*)$/);
-			if (metadataMatch) {
-				const [header, value] = metadataMatch.slice(1);
-				metadata.push([header, removeQuotations(value)]);
-				return;
-			}
+		const scoreMatch = line.match(/^#([^:]+): *(.*)$/);
+		if (scoreMatch) {
+			const [header, data] = scoreMatch.slice(1);
+			score.push([header, removeQuotations(data)]);
+			continue;
+		}
 
-			if (line.startsWith('#')) {
-				console.warn(`Unknown SUS data line: "${line}"`);
-			}
-		});
+		const metadataMatch = line.match(/^#(.+?) (.*)$/);
+		if (metadataMatch) {
+			const [header, value] = metadataMatch.slice(1);
+			metadata.push([header, removeQuotations(value)]);
+			continue;
+		}
+
+		console.warn(`Unknown SUS data line: "${line}"`);
+	}
 
 	return { score, metadata };
 }
@@ -80,13 +77,13 @@ function parseMetadata(lines: Line[]): Metadata {
 				metadata.movie = value;
 				break;
 			case 'WAVEOFFSET':
-				metadata.waveoffset = parseInt(value);
+				metadata.waveoffset = Number.parseInt(value);
 				break;
 			case 'MOVIEOFFSET':
-				metadata.movieoffset = parseInt(value);
+				metadata.movieoffset = Number.parseInt(value);
 				break;
 			case 'BASEBPM':
-				metadata.basebpm = parseInt(value);
+				metadata.basebpm = Number.parseInt(value);
 				break;
 			case 'REQUEST': {
 				const requests = metadata.requests || [];
@@ -109,11 +106,11 @@ function parseScoreData(lines: Line[], ticksPerBeat: number): ScoreData {
 			([header]) =>
 				header.length === 5 &&
 				header.endsWith('02') &&
-				!isNaN(parseInt(header)),
+				!Number.isNaN(Number.parseInt(header)),
 		)
 		.map(([header, data]) => [
-			parseInt(header.substring(0, 3)),
-			parseInt(data),
+			Number.parseInt(header.substring(0, 3)),
+			Number.parseInt(data),
 		]);
 
 	if (barLengths.length === 0) {
@@ -152,45 +149,41 @@ function parseScoreData(lines: Line[], ticksPerBeat: number): ScoreData {
 	const directionals: Note[] = [];
 	const streams = new Map<string, Note[]>();
 
-	lines.forEach((line) => {
+	for (const line of lines) {
 		const [header, data] = line;
 
 		// BPM
 		if (header.length === 5 && header.startsWith('BPM')) {
 			bpmMap.set(header.substring(3), +data);
-			return;
+			continue;
 		}
 
 		// BPM Change
 		if (header.length === 5 && header.endsWith('08')) {
 			bpmChangeObjects.push(...toRawObjects(line, toTick));
-			return;
+			continue;
 		}
 
 		// Tap Notes
 		if (header.length === 5 && header[3] === '1') {
 			taps.push(...toNoteObjects(line, toTick));
-			return;
+			continue;
 		}
 
-		// Tap Notes
+		// Slide Notes
 		if (header.length === 6 && header[3] === '3') {
 			const channel = header[5];
-			const stream = streams.get(channel);
-			if (stream) {
-				stream.push(...toNoteObjects(line, toTick));
-			} else {
-				streams.set(channel, toNoteObjects(line, toTick));
-			}
-			return;
+			const stream = streams.get(channel) ?? [];
+			stream.push(...toNoteObjects(line, toTick));
+			streams.set(channel, stream);
+			continue;
 		}
 
 		// Directional Notes
 		if (header.length === 5 && header[3] === '5') {
 			directionals.push(...toNoteObjects(line, toTick));
-			return;
 		}
-	});
+	}
 
 	const slides = [...streams.values()].flatMap(toSlides);
 
@@ -210,38 +203,35 @@ function parseScoreData(lines: Line[], ticksPerBeat: number): ScoreData {
 
 function toSlides(stream: Note[]) {
 	const slides: Note[][] = [];
-
 	let current: Note[] | undefined;
-	stream
-		.sort((a, b) => a.tick - b.tick)
-		.forEach((note) => {
-			if (!current) {
-				current = [];
-				slides.push(current);
-			}
+	for (const note of stream.sort((a, b) => a.tick - b.tick)) {
+		if (!current) {
+			current = [];
+			slides.push(current);
+		}
 
-			current.push(note);
+		current.push(note);
 
-			if (note.type === 2) {
-				current = undefined;
-			}
-		});
+		if (note.type === 2) {
+			current = undefined;
+		}
+	}
 
 	return slides;
 }
 
 function toNoteObjects(line: Line, toTick: ToTick) {
 	const [header] = line;
-	const lane = parseInt(header[4], 36);
+	const lane = Number.parseInt(header[4], 36);
 
 	return toRawObjects(line, toTick).map(([tick, value]) => {
-		const width = parseInt(value[1], 36);
+		const width = Number.parseInt(value[1], 36);
 
 		return {
 			tick,
 			lane,
 			width,
-			type: parseInt(value[0], 36),
+			type: Number.parseInt(value[0], 36),
 		};
 	});
 }
@@ -280,7 +270,7 @@ export function parse(sus: string): Score {
 	}
 
 	const ticksPerBeat =
-		parseInt(ticksPerBeatRequest?.split(' ')[1] ?? '') || 480;
+		Number.parseInt(ticksPerBeatRequest?.split(' ')[1] ?? '') || 480;
 
 	// return scoreLines
 	return {

@@ -2,7 +2,7 @@ const version = '[VI]{version}[/VI]';
 
 function gcd(a: number, b: number): number {
 	if (a < b) return gcd(b, a);
-	if (b == 0) return a;
+	if (b === 0) return a;
 	return gcd(b, a % b);
 }
 
@@ -28,9 +28,9 @@ class DefaultMap<K, V> extends Map<K, V> {
 			const defaultValue: V = this.generateDefault();
 			super.set(key, defaultValue);
 			return defaultValue;
-		} else {
-			return value;
 		}
+
+		return value;
 	}
 }
 
@@ -70,7 +70,9 @@ export function stringify(
 	for (const [header, value] of Object.entries(metadata)) {
 		if (header !== 'requests') {
 			lines.push(
-				`#${header.toUpperCase()} ${typeof value === 'number' ? value : addQuotes(value as string)}`,
+				`#${header.toUpperCase()} ${
+					typeof value === 'number' ? value : addQuotes(value as string)
+				}`,
 			);
 		} else {
 			lines.push('');
@@ -86,15 +88,15 @@ export function stringify(
 	const noteMaps: DefaultMap<string, { raws: Raw[]; ticksPerMeasure: number }> =
 		new DefaultMap(() => ({ raws: [], ticksPerMeasure: 0 }));
 
-	barLengths.forEach(([measure, value]) => {
+	for (const [measure, value] of barLengths) {
 		lines.push(`#${measure.toString().padStart(3, '0')}02:${value}`);
-	});
-	lines.push(``);
+	}
+	lines.push('');
 
 	let accumulatedTicks = 0;
 	const barLengthsInTicks = barLengths
 		.map(([measure, value], ind, arr) => {
-			const [nextMeasure] = arr[ind + 1] ?? [Infinity];
+			const [nextMeasure] = arr[ind + 1] ?? [Number.POSITIVE_INFINITY];
 			const tick = accumulatedTicks;
 			accumulatedTicks += (nextMeasure - measure) * value * tickPerBeat;
 			return { tick, measure, value };
@@ -106,7 +108,11 @@ export function stringify(
 			tick: startTick,
 			measure,
 			value: beatsPerMeasure,
-		} = barLengthsInTicks.find(({ tick: startTick }) => tick >= startTick)!;
+		} = barLengthsInTicks.find(({ tick: startTick }) => tick >= startTick) ?? {
+			tick: 0,
+			measure: 0,
+			value: 4,
+		};
 		const currentMeasure = Math.floor(
 			measure + (tick - startTick) / tickPerBeat / beatsPerMeasure,
 		);
@@ -123,42 +129,43 @@ export function stringify(
 		);
 	}
 	const bpmIdentifiers = new Map();
-	bpms.forEach(([tick, value]) => {
+	for (const [tick, value] of bpms) {
 		const identifier = (bpmIdentifiers.size + 1).toString(36).padStart(2, '0');
 		if (!bpmIdentifiers.has(value)) {
 			bpmIdentifiers.set(value, identifier);
 			lines.push(`#BPM${bpmIdentifiers.get(value)}:${value}`);
 		}
-		pushRaw(tick, `08`, bpmIdentifiers.get(value) ?? identifier);
-	});
+		pushRaw(tick, '08', bpmIdentifiers.get(value) ?? identifier);
+	}
 
-	taps.forEach(({ tick, lane, width, type }) => {
+	for (const { tick, lane, width, type } of taps) {
 		pushRaw(tick, `1${lane.toString(36)}`, `${type}${width.toString(36)}`);
-	});
+	}
 
-	directionals.forEach(({ tick, lane, width, type }) => {
+	for (const { tick, lane, width, type } of directionals) {
 		pushRaw(tick, `5${lane.toString(36)}`, `${type}${width.toString(36)}`);
-	});
+	}
 
 	const provider = new ChannelProvider();
-	slides.forEach((steps) => {
+	for (const steps of slides) {
 		const startTick = steps[0].tick;
 		const endTick = steps[steps.length - 1].tick;
 		const channel = provider.generateChannel(startTick, endTick).toString(36);
-		steps.forEach(({ tick, lane, width, type }) => {
+		for (const { tick, lane, width, type } of steps) {
 			pushRaw(
 				tick,
 				`3${lane.toString(36)}${channel}`,
 				`${type}${width.toString(36)}`,
 			);
-		});
-	});
+		}
+	}
 
 	noteMaps.forEach(({ raws, ticksPerMeasure }, tag) => {
 		const gcdValue = raws.reduce(
 			(acc, ele) => gcd(ele.tick, acc),
 			ticksPerMeasure,
 		);
+
 		const data = new Map(
 			raws
 				.sort(({ tick: a }, { tick: b }) => a - b)
@@ -167,7 +174,7 @@ export function stringify(
 		const values: string[] = [];
 		for (let i = 0; i * gcdValue < ticksPerMeasure; i++) {
 			const tick = i * gcdValue;
-			values.push(data.get(tick) ?? `00`);
+			values.push(data.get(tick) ?? '00');
 		}
 		lines.push(`#${tag}:${values.join('')}`);
 	});
