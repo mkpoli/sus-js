@@ -1,28 +1,28 @@
 {
-  "name": "sus-io",
-  "version": "1.0.6",
-  "description": "A SUS (Sliding Universal Score) converter (parser and stringifier).",
-  "author": "mkpoli <mkpoli@mkpo.li>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mkpoli/sus-js.git"
-  },
-  "homepage": "https://github.com/mkpoli/sus-js#readme",
-  "bugs": {
-    "url": "https://github.com/mkpoli/sus-js/issues"
-  },
-  "keywords": [
-    "parser",
-    "stringifier",
-    "converter",
-    "sus",
-    "pjsekai",
-    "chunithm",
-    "seaurchin"
-  ],
-  "source": "src/index.ts",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "browser": "dist/index.umd.js"
+	"name": "sus-io",
+	"version": "1.0.6",
+	"description": "A SUS (Sliding Universal Score) converter (parser and stringifier).",
+	"author": "mkpoli <mkpoli@mkpo.li>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mkpoli/sus-js.git"
+	},
+	"homepage": "https://github.com/mkpoli/sus-js#readme",
+	"bugs": {
+		"url": "https://github.com/mkpoli/sus-js/issues"
+	},
+	"keywords": [
+		"parser",
+		"stringifier",
+		"converter",
+		"sus",
+		"pjsekai",
+		"chunithm",
+		"seaurchin"
+	],
+	"source": "src/index.ts",
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.esm.js",
+	"browser": "dist/index.umd.js"
 }

@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "declaration": true,
-    "types": [],
-    "lib": ["es2019", "dom"],
-  },
-  "include": ["**/*.ts"],
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"declaration": true,
+		"types": [],
+		"lib": ["es2019", "dom"]
+	},
+	"include": ["**/*.ts"]
 }
