@@ -20,6 +20,7 @@
     "release": "run-s test version build publish"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.2",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^29.5.13",
