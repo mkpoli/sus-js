@@ -1,3 +1,5 @@
+import { InvalidAlignmentError } from './errors';
+
 const version = '[VI]{version}[/VI]';
 
 function gcd(a: number, b: number): number {
@@ -165,6 +167,13 @@ export function stringify(
 			(acc, ele) => gcd(ele.tick, acc),
 			ticksPerMeasure,
 		);
+
+		if (!Number.isInteger(gcdValue)) {
+			throw new InvalidAlignmentError(
+				gcdValue,
+				raws.map(({ tick }) => tick),
+			);
+		}
 
 		const data = new Map(
 			raws
