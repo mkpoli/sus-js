@@ -15,7 +15,10 @@
     "test": "lerna exec -- vitest --passWithNoTests",
     "test:parse": "lerna exec --scope=sus-parse -- vitest",
     "test:stringify": "lerna exec --scope=sus-stringify -- vitest",
-    "version": "lerna version --force-publish *",
+    "version:major": "lerna version major --force-publish",
+    "version:minor": "lerna version minor --force-publish",
+    "version:patch": "lerna version patch --force-publish",
+    "version": "lerna version --force-publish",
     "publish": "lerna publish from-git",
     "release": "run-s test version build publish"
   },
