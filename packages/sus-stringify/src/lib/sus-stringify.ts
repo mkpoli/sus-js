@@ -141,11 +141,19 @@ export function stringify(
 	}
 
 	for (const { tick, lane, width, type } of taps) {
-		pushRaw(tick, `1${lane.toString(36)}`, `${type}${width.toString(36)}`);
+		pushRaw(
+			tick,
+			`1${lane.toString(36)}`,
+			`${type.toString(36)}${width.toString(36)}`,
+		);
 	}
 
 	for (const { tick, lane, width, type } of directionals) {
-		pushRaw(tick, `5${lane.toString(36)}`, `${type}${width.toString(36)}`);
+		pushRaw(
+			tick,
+			`5${lane.toString(36)}`,
+			`${type.toString(36)}${width.toString(36)}`,
+		);
 	}
 
 	const provider = new ChannelProvider();
@@ -157,7 +165,7 @@ export function stringify(
 			pushRaw(
 				tick,
 				`3${lane.toString(36)}${channel}`,
-				`${type}${width.toString(36)}`,
+				`${type.toString(36)}${width.toString(36)}`,
 			);
 		}
 	}
